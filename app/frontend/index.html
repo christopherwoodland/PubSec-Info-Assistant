@@ -2,12 +2,33 @@
  Licensed under the MIT license.-->
 
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en">  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Information Assistant agent template</title>
+    
+    <!-- Runtime configuration for MSAL -->
+    <script>
+        // This configuration can be populated by the server-side rendering or build process
+        window.__RUNTIME_CONFIG__ = {
+            AZURE_CLIENT_ID: '${AZURE_CLIENT_ID}', // To be replaced at runtime
+            AZURE_TENANT_ID: '${AZURE_TENANT_ID}', // To be replaced at runtime
+            AZURE_AUTHORITY: '${AZURE_AUTHORITY}', // To be replaced at runtime
+            API_SCOPES: ['User.Read'] // Default scopes
+        };
+        
+        // Remove placeholder values if they weren't replaced
+        if (window.__RUNTIME_CONFIG__.AZURE_CLIENT_ID.startsWith('${')) {
+            window.__RUNTIME_CONFIG__.AZURE_CLIENT_ID = undefined;
+        }
+        if (window.__RUNTIME_CONFIG__.AZURE_TENANT_ID.startsWith('${')) {
+            window.__RUNTIME_CONFIG__.AZURE_TENANT_ID = undefined;
+        }
+        if (window.__RUNTIME_CONFIG__.AZURE_AUTHORITY.startsWith('${')) {
+            window.__RUNTIME_CONFIG__.AZURE_AUTHORITY = undefined;
+        }
+    </script>
   </head>
   <body>
     <div id="root"></div>
