@@ -33,18 +33,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [accounts, setAccounts] = useState<AccountInfo[]>([]);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
+    const [error, setError] = useState<string | null>(null);    useEffect(() => {
         const initializeMsal = async () => {
             try {
                 setIsLoading(true);
+                setError(null);
                 
-                // Load configuration dynamically
-                const config = await import('./authConfig').then(m => m.loadMsalConfig());
-                const configResult = await config;
+                // Load configuration dynamically and wait for it to complete
+                const { loadMsalConfig } = await import('./authConfig');
+                const configResult = await loadMsalConfig();
                 
-                // Create MSAL instance
+                // Validate that we have the required configuration
+                if (!configResult.auth.clientId) {
+                    throw new Error('Azure Client ID is not configured. Please set AZURE_CLIENT_ID in your environment or App Service configuration.');
+                }
+                
+                console.log('Creating MSAL instance with configuration:', {
+                    clientId: configResult.auth.clientId ? '***configured***' : 'missing',
+                    authority: configResult.auth.authority,
+                    redirectUri: configResult.auth.redirectUri
+                });
+                
+                // Create MSAL instance with loaded configuration
                 const msalInstance = new PublicClientApplication(configResult);
                 
                 // Initialize MSAL
@@ -64,9 +74,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     setIsAuthenticated(true);
                 }
                 
+                console.log('MSAL initialization completed successfully');
+                
             } catch (err) {
                 console.error('MSAL initialization error:', err);
-                setError('Failed to initialize authentication');
+                setError(err instanceof Error ? err.message : 'Failed to initialize authentication');
             } finally {
                 setIsLoading(false);
             }

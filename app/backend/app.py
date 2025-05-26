@@ -87,10 +87,11 @@ ENV = {
     "ENABLE_WEB_CHAT": "false",
     "ENABLE_UNGROUNDED_CHAT": "false",
     "ENABLE_MATH_ASSISTANT": "false",
-    "ENABLE_TABULAR_DATA_ASSISTANT": "false",
-    "MAX_CSV_FILE_SIZE": "7",
+    "ENABLE_TABULAR_DATA_ASSISTANT": "false",    "MAX_CSV_FILE_SIZE": "7",
     "LOCAL_DEBUG": "false",
-    "AZURE_AI_CREDENTIAL_DOMAIN": "cognitiveservices.azure.com"
+    "AZURE_AI_CREDENTIAL_DOMAIN": "cognitiveservices.azure.com",
+    "AZURE_CLIENT_ID": None,
+    "AZURE_TENANT_ID": None
     }
 
 for key, value in ENV.items():
@@ -642,6 +643,29 @@ async def get_application_title():
     response = {
             "APPLICATION_TITLE": ENV["APPLICATION_TITLE"]
         }
+    return response
+
+@app.get("/getMsalConfig")
+async def get_msal_config():
+    """Get MSAL (Microsoft Authentication Library) configuration
+    
+    Returns:
+        dict: A dictionary containing the MSAL configuration including:
+            - clientId: The Azure AD application client ID
+            - tenantId: The Azure AD tenant ID  
+            - authority: The Azure AD authority URL
+    """
+    tenant_id = ENV.get("AZURE_TENANT_ID")
+    client_id = ENV.get("AZURE_CLIENT_ID")
+    
+    # Build authority URL based on tenant ID
+    authority = f"https://login.microsoftonline.com/{tenant_id}" if tenant_id else None
+    
+    response = {
+        "clientId": client_id,
+        "tenantId": tenant_id,
+        "authority": authority
+    }
     return response
 
 @app.get("/getalltags")

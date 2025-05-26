@@ -407,10 +407,11 @@ module "webapp" {
     ENABLE_WEB_CHAT                         = var.enableWebChat
     ENABLE_BING_SAFE_SEARCH                 = var.enableBingSafeSearch
     ENABLE_UNGROUNDED_CHAT                  = var.enableUngroundedChat
-    ENABLE_MATH_ASSISTANT                   = var.enableMathAssitant
-    ENABLE_TABULAR_DATA_ASSISTANT           = var.enableTabularDataAssistant
+    ENABLE_MATH_ASSISTANT                   = var.enableMathAssitant    ENABLE_TABULAR_DATA_ASSISTANT           = var.enableTabularDataAssistant
     MAX_CSV_FILE_SIZE                       = var.maxCsvFileSize
     AZURE_AI_CREDENTIAL_DOMAIN               = var.azure_ai_private_link_domain
+    AZURE_CLIENT_ID                         = module.entraObjects.azure_ad_web_app_client_id
+    AZURE_TENANT_ID                         = data.azurerm_client_config.current.tenant_id
   }
 
   aadClientId = module.entraObjects.azure_ad_web_app_client_id

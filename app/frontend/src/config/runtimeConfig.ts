@@ -36,6 +36,28 @@ export const loadRuntimeConfig = async (): Promise<RuntimeConfig> => {
     const config: RuntimeConfig = {};
 
     try {
+        // First, try to get configuration from backend API
+        console.log('Attempting to fetch MSAL config from backend API...');
+        const backendResponse = await fetch('/getMsalConfig', {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        if (backendResponse.ok) {
+            const backendConfig = await backendResponse.json();
+            console.log('Found backend MSAL configuration');
+            
+            config.AZURE_CLIENT_ID = backendConfig.clientId;
+            config.AZURE_TENANT_ID = backendConfig.tenantId;
+            config.AZURE_AUTHORITY = backendConfig.authority;
+        } else {
+            console.log('Backend MSAL config not available, status:', backendResponse.status);
+        }
+    } catch (error) {
+        console.log('Backend MSAL config fetch failed:', error);
+    }
+
+    try {
         // Try to get configuration from App Service authentication
         const response = await fetch('/.auth/me', {
             method: 'GET',
@@ -48,7 +70,7 @@ export const loadRuntimeConfig = async (): Promise<RuntimeConfig> => {
                 const authInfo = authData[0];
                 console.log('Found App Service authentication info');
                 
-                config.AZURE_CLIENT_ID = authInfo.client_id;
+                config.AZURE_CLIENT_ID = config.AZURE_CLIENT_ID || authInfo.client_id;
                 if (authInfo.authority) {
                     config.AZURE_AUTHORITY = authInfo.authority;
                     // Extract tenant ID from authority URL
