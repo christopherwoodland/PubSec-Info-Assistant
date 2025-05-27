@@ -1,5 +1,5 @@
 output "nsg_name" {
-  value = azurerm_network_security_group.nsg.name  
+  value = azurerm_network_security_group.nsg.name
 }
 
 output "nsg_id" {
@@ -36,7 +36,7 @@ output "snetAzureAi_name" {
 
 output "snetKeyVault_id" {
   description = "The ID of the subnet dedicated for the Key Vault"
-  value = data.azurerm_subnet.keyVault.id
+  value       = data.azurerm_subnet.keyVault.id
 }
 
 output "snetKeyVault_name" {

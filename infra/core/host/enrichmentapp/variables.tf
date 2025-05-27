@@ -11,17 +11,17 @@ variable "location" {
 }
 
 variable "tags" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 
 variable "kind" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "reserved" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -40,27 +40,27 @@ variable "storageAccountId" {
 }
 
 variable "alwaysOn" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "appCommandLine" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "appSettings" {
-  type = map(string)
+  type    = map(string)
   default = {}
 }
 
 variable "ftpsState" {
-  type = string
+  type    = string
   default = "FtpsOnly"
 }
 
 variable "healthCheckPath" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -70,31 +70,31 @@ variable "applicationInsightsConnectionString" {
 }
 
 variable "logAnalyticsWorkspaceResourceId" {
-  type = string
+  type    = string
   default = ""
 }
 
-variable "keyVaultUri" { 
+variable "keyVaultUri" {
   type = string
 }
 
 variable "keyVaultName" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "managedIdentity" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "scmDoBuildDuringDeployment" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "enableOryxBuild" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -139,5 +139,5 @@ variable "private_dns_zone_ids" {
 }
 
 variable "azure_environment" {
-  type        = string
+  type = string
 }

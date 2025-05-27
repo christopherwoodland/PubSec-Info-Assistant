@@ -10,16 +10,16 @@ resource "azurerm_cognitive_account" "cognitiveService" {
 }
 
 module "cog_service_key" {
-  source                        = "../../security/keyvaultSecret"
-  arm_template_schema_mgmt_api  = var.arm_template_schema_mgmt_api
-  key_vault_name                = var.key_vault_name
-  resourceGroupName             = var.resourceGroupName
-  secret_name                   = "AZURE-AI-KEY"
-  secret_value                  = azurerm_cognitive_account.cognitiveService.primary_access_key
-  alias                         = "aisvckey"
-  tags                          = var.tags
-  kv_secret_expiration          = var.kv_secret_expiration
-  contentType                   = "application/vnd.bag-StrongEncPasswordString"
+  source                       = "../../security/keyvaultSecret"
+  arm_template_schema_mgmt_api = var.arm_template_schema_mgmt_api
+  key_vault_name               = var.key_vault_name
+  resourceGroupName            = var.resourceGroupName
+  secret_name                  = "AZURE-AI-KEY"
+  secret_value                 = azurerm_cognitive_account.cognitiveService.primary_access_key
+  alias                        = "aisvckey"
+  tags                         = var.tags
+  kv_secret_expiration         = var.kv_secret_expiration
+  contentType                  = "application/vnd.bag-StrongEncPasswordString"
 }
 
 data "azurerm_subnet" "subnet" {

@@ -3,12 +3,12 @@ variable "randomString" {
 }
 
 variable "requireWebsiteSecurityMembership" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "azure_websites_domain" {
-  type        = string
+  type = string
 }
 
 variable "isInAutomation" {
@@ -34,8 +34,8 @@ variable "aadMgmtClientSecret" {
 }
 
 variable "entraOwners" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Comma-separated list of owner emails"
 }
 
@@ -45,5 +45,5 @@ variable "serviceManagementReference" {
 }
 
 variable "password_lifetime" {
-  type      = number
+  type = number
 }

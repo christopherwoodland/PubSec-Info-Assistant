@@ -13,12 +13,12 @@ data "template_file" "workflow" {
 resource "azurerm_resource_group_template_deployment" "kv_secret" {
   resource_group_name = var.resourceGroupName
   parameters_content = jsonencode({
-    "keyVaultName"              = { value = "${var.key_vault_name}" },
-    "secretName"                = { value = "${var.secret_name}" },
-    "value"                    = { value = "${var.secret_value}" },
-    "tags"                      = { value = var.tags },
-    "expiration"                = { value = var.kv_secret_expiration },
-    "contentType"               = { value = var.contentType },
+    "keyVaultName" = { value = "${var.key_vault_name}" },
+    "secretName"   = { value = "${var.secret_name}" },
+    "value"        = { value = "${var.secret_value}" },
+    "tags"         = { value = var.tags },
+    "expiration"   = { value = var.kv_secret_expiration },
+    "contentType"  = { value = var.contentType },
   })
   template_content = data.template_file.workflow.template
   # The filemd5 forces this to run when the file is changed

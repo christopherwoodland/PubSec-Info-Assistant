@@ -39,7 +39,7 @@ variable "vnet_name" {
 }
 
 variable "subnet_name" {
-  type = string  
+  type = string
 }
 
 variable "subnet_id" {

@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 data "azurerm_private_dns_zone" "kv_dns_zone" {
-  count                = var.is_secure_mode ? 1 : 0
+  count               = var.is_secure_mode ? 1 : 0
   name                = "privatelink.${var.azure_keyvault_domain}"
   resource_group_name = var.resourceGroupName
 }
@@ -19,29 +19,29 @@ resource "azurerm_key_vault" "kv" {
   public_network_access_enabled   = var.is_secure_mode ? false : true
 
   network_acls {
-    default_action             = var.is_secure_mode ? "Deny" : "Allow" 
+    default_action             = var.is_secure_mode ? "Deny" : "Allow"
     bypass                     = "AzureServices"
     virtual_network_subnet_ids = var.is_secure_mode ? [var.subnet_id] : []
   }
 }
- 
+
 resource "azurerm_key_vault_access_policy" "infoasst" {
-  depends_on  = [
+  depends_on = [
     azurerm_key_vault.kv
   ]
   key_vault_id = azurerm_key_vault.kv.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = var.kvAccessObjectId
- 
+
   key_permissions = [
-      "Backup", "Create", "Decrypt", "Delete", "Encrypt", "Get", "Import",
-      "List", "Purge", "Recover", "Restore", "Sign", "UnwrapKey", "Update",
-      "Verify", "WrapKey"
-    ]
- 
+    "Backup", "Create", "Decrypt", "Delete", "Encrypt", "Get", "Import",
+    "List", "Purge", "Recover", "Restore", "Sign", "UnwrapKey", "Update",
+    "Verify", "WrapKey"
+  ]
+
   secret_permissions = [
-      "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
-    ]
+    "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
+  ]
 }
 
 data "azurerm_subnet" "subnet" {

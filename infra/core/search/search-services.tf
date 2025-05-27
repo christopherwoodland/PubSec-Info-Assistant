@@ -9,7 +9,7 @@ resource "azurerm_search_service" "search" {
   local_authentication_enabled  = false
   replica_count                 = 1
   partition_count               = 1
-  semantic_search_sku           = var.semanticSearch 
+  semantic_search_sku           = var.semanticSearch
 
   identity {
     type = "SystemAssigned"

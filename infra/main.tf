@@ -264,6 +264,20 @@ module "kvModule" {
   arm_template_schema_mgmt_api = var.arm_template_schema_mgmt_api
 }
 
+module "aad_web_client_secret" {
+  source                       = "./core/security/keyvaultSecret"
+  arm_template_schema_mgmt_api = var.arm_template_schema_mgmt_api
+  key_vault_name               = module.kvModule.keyVaultName
+  resourceGroupName            = azurerm_resource_group.rg.name
+  secret_name                  = "AZURE-CLIENT-SECRET"
+  secret_value                 = module.entraObjects.azure_ad_web_app_client_secret
+  alias                        = "aadclientsecret"
+  tags                         = local.tags
+  kv_secret_expiration         = var.kv_secret_expiration
+  contentType                  = "application/vnd.bag-StrongEncPasswordString"
+  depends_on                   = [module.kvModule, module.entraObjects]
+}
+
 module "enrichmentApp" {
   source    = "./core/host/enrichmentapp"
   name      = var.enrichmentServiceName != "" ? var.enrichmentServiceName : "infoasst-enrichmentweb-${random_string.random.result}"

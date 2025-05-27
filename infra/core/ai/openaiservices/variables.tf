@@ -4,7 +4,7 @@ variable "name" {
 
 variable "location" {
   type    = string
-  default = "" 
+  default = ""
 }
 
 variable "tags" {
@@ -36,7 +36,7 @@ variable "resourceGroupName" {
   default = ""
 }
 
-variable "key_vault_name" { 
+variable "key_vault_name" {
   type = string
 }
 
@@ -46,7 +46,7 @@ variable "useExistingAOAIService" {
 }
 
 variable "is_secure_mode" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -64,7 +64,7 @@ variable "subnet_name" {
 
 variable "subnet_id" {
   type = string
-  
+
 }
 
 variable "outbound_network_access_restricted" {

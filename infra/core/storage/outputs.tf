@@ -16,7 +16,7 @@ output "storage_account_id" {
 
 output "blobPrivateEndpointId" {
   value = var.is_secure_mode ? azurerm_private_endpoint.blobPrivateEndpoint[0].id : null
-  
+
 }
 
 output "queuePrivateEndpointId" {
