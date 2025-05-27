@@ -36,7 +36,7 @@ output "BACKEND_URI" {
 }
 
 output "BACKEND_NAME" {
-  value = module.webapp.web_app_name 
+  value = module.webapp.web_app_name
 }
 
 output "RESOURCE_GROUP_NAME" {
@@ -159,7 +159,7 @@ output "CHAT_WARNING_BANNER_TEXT" {
   value = var.chatWarningBannerText
 }
 
-output "AZURE_OPENAI_ENDPOINT"  {
+output "AZURE_OPENAI_ENDPOINT" {
   value = var.useExistingAOAIService ? "https://${var.azureOpenAIServiceName}.${var.azure_openai_domain}/" : module.openaiServices.endpoint
 }
 
@@ -197,7 +197,7 @@ output "CONTAINER_REGISTRY_USERNAME" {
 
 output "CONTAINER_REGISTRY_PASSWORD" {
   sensitive = true
-  value = module.acr.admin_password
+  value     = module.acr.admin_password
 }
 
 output "DNS_PRIVATE_RESOLVER_IP" {
