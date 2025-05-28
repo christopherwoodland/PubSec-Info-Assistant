@@ -111,15 +111,15 @@ resource "azurerm_linux_web_app" "app_service" {
   app_settings = merge(
     var.appSettings,
     {
-      "SCM_DO_BUILD_DURING_DEPLOYMENT"                = lower(tostring(var.scmDoBuildDuringDeployment))
-      "ENABLE_ORYX_BUILD"                             = lower(tostring(var.enableOryxBuild))
-      "APPLICATIONINSIGHTS_CONNECTION_STRING"         = var.applicationInsightsConnectionString
-      "BING_SEARCH_KEY"                               = "@Microsoft.KeyVault(SecretUri=${var.keyVaultUri}secrets/BINGSEARCH-KEY)"
-      "MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"     = "@Microsoft.KeyVault(SecretUri=${var.keyVaultUri}secrets/AAD-WEB-CLIENT-SECRET)"
-      "WEBSITE_PULL_IMAGE_OVER_VNET"                  = var.is_secure_mode ? "true" : "false"
-      "WEBSITES_PORT"                                 = "6000"
-      "WEBSITES_CONTAINER_START_TIME_LIMIT"           = "1600"
-      "WEBSITES_ENABLE_APP_SERVICE_STORAGE"           = "false"
+      "SCM_DO_BUILD_DURING_DEPLOYMENT"           = lower(tostring(var.scmDoBuildDuringDeployment))
+      "ENABLE_ORYX_BUILD"                        = lower(tostring(var.enableOryxBuild))
+      "APPLICATIONINSIGHTS_CONNECTION_STRING"    = var.applicationInsightsConnectionString
+      "BING_SEARCH_KEY"                          = "@Microsoft.KeyVault(SecretUri=${var.keyVaultUri}secrets/BINGSEARCH-KEY)"
+      "MICROSOFT_PROVIDER_AUTHENTICATION_SECRET" = "@Microsoft.KeyVault(SecretUri=${var.keyVaultUri}secrets/AAD-WEB-CLIENT-SECRET)"
+      "WEBSITE_PULL_IMAGE_OVER_VNET"             = var.is_secure_mode ? "true" : "false"
+      "WEBSITES_PORT"                            = "6000"
+      "WEBSITES_CONTAINER_START_TIME_LIMIT"      = "1600"
+      "WEBSITES_ENABLE_APP_SERVICE_STORAGE"      = "false"
     }
   )
 
@@ -135,13 +135,14 @@ resource "azurerm_linux_web_app" "app_service" {
     }
     failed_request_tracing = true
   }
-
   auth_settings_v2 {
     auth_enabled           = true
     default_provider       = "azureactivedirectory"
     runtime_version        = "~2"
     unauthenticated_action = "RedirectToLoginPage"
-    require_https          = true    active_directory_v2 {
+    require_https          = true
+
+    active_directory_v2 {
       client_id                   = var.aadClientId
       client_secret_setting_name  = "MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"
       login_parameters            = {}
